@@ -43,8 +43,6 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 sh '''
-                #ssh -o StrictHostKeyChecking=no ubuntu@<EC2_PUBLIC_IP> << EOF
-                #docker pull $DOCKER_IMAGE:latest
                 docker stop python-app || true
                 docker rm python-app || true
                 docker run -d -p 5000:5000 --name python-app $DOCKER_IMAGE:latest
@@ -57,14 +55,14 @@ pipeline {
             emailext(
                 subject: "Jenkins Build Successful !",
                 body: "Jenkins CICD-Project-pipeline completed successfully.",
-                to: "hemeenufradus18180@gmail.com" 
+                to: "hemanathan18180@gmail.com" 
             ) 
         }
         failure {
             emailext(
                 subject: "Jenkins Build Failed !!",
                 body: "Jenkins CICD-Project-pipeline failed. Please check logs.",
-                to: "hemeenufradus18180@gmail.com"
+                to: "hemanathan18180@gmail.com"
             )
         }
     }
